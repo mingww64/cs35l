@@ -1,9 +1,0 @@
-#!/bin/bash
-
-WORD_CHARS="A-Za-z0-9'.&/-"
-DICTIONARY="/usr/share/dict/linux.words"
-#DICTIONARY="sorted.words"
-tr -cs "$WORD_CHARS" '[\n*]' | \
-  sort -u | \
-  comm -23 - <(sort "$DICTIONARY")
-
