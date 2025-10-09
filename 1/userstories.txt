@@ -1,0 +1,64 @@
+1. 
+As a user, I want to post a text message in realtime so I can share what's happening now with followers.
+- Given the user is logged in, when they type a message of certain characters and press "Post", then the message is published to their profile instantly.
+- ​Given the user's post has been published, when their followers view profile, then the new post appears at the top.
+
+- Independent: It can be developed without depending other other functions like replying, liking or DM.
+- Negotiable: The definition of "realtime" is negotiable. The team can discuss the acceptable latency (e.g., under 2 seconds) and the user experience (e.g., does the post slide in smoothly or just appear?).
+- Valuable: It enables live user interation and make users feel more connected, which is a core expectation of a mordern social media app.
+- Estimable: The team can analyze the requirements for setting up a WebSocket and estimate the work for both the back-end push mechanism and the front-end client listener.
+- Small: The story focus on the speed of content distribution of one post, which is narrow and well defined.
+- Testable: The real-time aspect is testable. Testers and use different account in various network conditions and geo distances to simulate poster and follower clients and record latency recipient without polling action.
+
+2.
+As a user, I want to follow other people so I can see their posts on my timeline.
+-   Given a user is on another user's profile, when they press "Follow", then the button state instantly changes to "Following".
+-   Given the user now follows someone, when the followed user posts, then their posts appear in the user's main feed.
+
+- Independent: It can be built without depending on other interactions like liking or replying.
+- Negotiable: The design and text of the "Follow" button and its "Following" state are open for discussion.
+- Valuable: It allows users to curate their content feed, which is the core of the personalized social media experience.
+- Estimable: The effort to create a user-to-user relationship in the database and update the UI is a standard, estimable task.
+- Small: The story focuses on a single, discrete action: creating a link between two users.
+- Testable: Testers can confirm the button state changes and that the database correctly reflects the new follower relationship.
+
+
+3.
+As a user, I want to see a live feed of posts from people I follow so I can see what's happening right now.
+-   Given the user opens the app, when they land on the home screen, then a list of posts from followed users is displayed.
+-   Given the user is viewing their feed, when someone they follow posts, then the new post appears at the top automatically.
+
+- Independent: The feed UI is a distinct component that can be developed separately from the content creation features.
+- Negotiable: The specific layout of the feed and the animation for how new posts appear are details that can be decided later.
+- Valuable: This is the app's primary surface for content consumption and is critical for user engagement.
+- Estimable: The team can estimate the work to build the UI and connect it to the real-time data source for posts.
+- Small: It focuses only on displaying the feed, not on complex features like algorithmic sorting or ads.
+- Testable: Testers can verify that the feed shows the correct posts and that new posts are pushed to the UI without a manual refresh.
+
+
+
+4.
+As a user, I want to reply to a post in real-time so I can join public conversations as they happen.
+-   Given a user is viewing a post, when they press "Reply" and submit their text, then their reply is published instantly.
+-   Given the user's reply is published, when other users view the original post, then the new reply appears in the thread in real-time.
+
+- Independent: Replying is a specific type of interaction, separate from other actions like liking or reposting.
+- Negotiable: The visual design of how conversations are threaded (e.g., indentation, connecting lines) is negotiable.
+- Valuable: It enables conversations, which are a primary driver of community and user retention.
+- Estimable: The work to link a reply to a parent post and update the thread view for all active users is estimable.
+- Small: The scope is narrowly focused on the reply action itself, not on related features like reply notifications.
+- Testable: Testers can confirm that a reply is correctly nested under its parent post and appears for other viewers without a refresh.
+
+
+
+5.
+As a user, I want to like a post so I can instantly show appreciation and see its popularity grow in real-time.
+-   Given a user is viewing a post, when they tap the "Like" icon, then the icon state changes and the count increases by one instantly.
+-   Given the post's like count has changed, when other users are viewing the same post, then the like count updates for them in real-time.
+
+- Independent: It's a self-contained action that doesn't depend on other features like following or replying.
+- Negotiable: The specific icon, color change, and animation for a "like" can be discussed and easily changed.
+- Valuable: It provides a simple, low-effort way for users to engage with content and give feedback.
+- Estimable: This is a common feature, and the effort to implement a real-time counter is straightforward to estimate.
+- Small: The story is laser-focused on a single interaction: clicking one button and updating a number.
+- Testable: Testers can verify that clicking the like button updates the count for the user and all other simultaneous viewers.
