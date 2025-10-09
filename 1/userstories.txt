@@ -38,7 +38,7 @@ As a user, I want to see a live feed of posts from people I follow so I can see 
 
 
 4.
-As a user, I want to reply to a post in real-time so I can join public conversations as they happen.
+As a user, I want to reply to a post so I can join public conversations as they happen.
 -   Given a user is viewing a post, when they press "Reply" and submit their text, then their reply is published instantly.
 -   Given the user's reply is published, when other users view the original post, then the new reply appears in the thread in real-time.
 
@@ -52,7 +52,7 @@ As a user, I want to reply to a post in real-time so I can join public conversat
 
 
 5.
-As a user, I want to like a post so I can instantly show appreciation and see its popularity grow in real-time.
+As a user, I want to like a post so I can show appreciation and see its popularity grow in real-time.
 -   Given a user is viewing a post, when they tap the "Like" icon, then the icon state changes and the count increases by one instantly.
 -   Given the post's like count has changed, when other users are viewing the same post, then the like count updates for them in real-time.
 
