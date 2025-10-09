@@ -1,14 +1,9 @@
 #!/bin/bash
 
-WORD_CHARS="A-Za-z0-9'.&/-"
+WORD_CHARS="A-Za-z0-9'.&/—-"
 DICTIONARY="/usr/share/dict/linux.words"
 if [ ! -f $DICTIONARY ]; then DICTIONARY="sorted.words"; fi
-#tr -cs "$WORD_CHARS" '[\n*]' | \
-#  sort -u | \
-#  comm -23 - <(sort "$DICTIONARY")
-
 tr -cs "$WORD_CHARS" '[\n*]' | \
-  tr 'A-Z' 'a-z' | \
   sort -u | \
-  comm -23 - <(sed 's|/.*||' < "$DICTIONARY" | tr 'A-Z' 'a-z' | sort -u)
+  comm -23 - <(sort "$DICTIONARY")
 
