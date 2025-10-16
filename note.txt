@@ -1,0 +1,220 @@
+[mingww64@lnxsrv03 ~]$ python3 ./randline.py
+  File "/w/home.27/home/mingww64/./randline.py", line 65
+    except IOError as (errno, strerror):
+                      ^
+SyntaxError: invalid syntax
+
+Python 2 uses tuple unpacking except ExceptionType as (var1, var2), whereas in Python 3 they are added as attributes of the expection object.
+
+The script doesn't immedately crash in Python 2.7 because I mostly used sys.stdout.write for console output following the same fasion of randline.py and I used .format instead of f-string. Noted that file.open in Python 2.7 read into byte-strings and won't support non-ascii characters.
+
+Notes of GenAI use:
+Prompt: Generate a starter template of argphase in python.
+Response:
+#!/usr/bin/env python3
+
+import argparse
+import sys
+
+def main(argv=None):
+    """
+    Main function to demonstrate argparse usage.
+    It's good practice to pass in argv as an argument to allow for easier testing.
+    """
+    # 1. Create the ArgumentParser object
+    # The description will be shown in the help message.
+    parser = argparse.ArgumentParser(
+        description='A starter template for the argparse module.'
+    )
+
+    # 2. Add arguments
+    
+    # A. Positional Argument
+    # This argument is required. If it's not provided, argparse will raise an error.
+    # The 'help' string provides information when the user runs the script with -h or --help.
+    parser.add_argument(
+        'input_file',
+        help='The path to the input file to be processed.'
+    )
+
+    # B. Optional Argument that takes a value (e.g., -o FILE or --output FILE)
+    # The 'dest' variable name is automatically inferred from the long name ('output'),
+    # so args.output will hold the value.
+    parser.add_argument(
+        '-o', '--output',
+        metavar='FILE',
+        default='output.txt', # A default value if the user doesn't provide one
+        help='Path to the output file (default: output.txt).'
+    )
+    
+    # C. Optional "flag" Argument (store a boolean)
+    # 'action="store_true"' means if the flag is present, set the value to True.
+    # If it's absent, it will be False by default.
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Enable verbose output.'
+    )
+
+    # D. Optional Argument with a specific type and choices
+    # 'type=int' will automatically try to convert the user's input to an integer.
+    # 'choices' restricts the user input to a specific list of values.
+    parser.add_argument(
+        '-l', '--level',
+        type=int,
+        choices=[1, 2, 3],
+        default=1,
+        help='Set the processing level (must be 1, 2, or 3).'
+    )
+
+    # 3. Parse the arguments
+    # If argv is None, argparse will use sys.argv[1:] automatically.
+    args = parser.parse_args(argv)
+
+    # 4. Use the arguments in your script
+    print("--- Arguments Received ---")
+    print(f"Input file: {args.input_file}")
+    print(f"Output file: {args.output}")
+    print(f"Verbose mode: {'On' if args.verbose else 'Off'}")
+    print(f"Processing level: {args.level}")
+    print("--------------------------\n")
+    
+    # Example of using an argument in a conditional
+    if args.verbose:
+        print("Verbose mode is enabled. Starting process...")
+    
+    print(f"Processing '{args.input_file}' with level {args.level}...")
+    print(f"Result will be saved to '{args.output}'.")
+    # --- Your script's logic would go here ---
+
+
+if __name__ == '__main__':
+    # When the script is run directly, execute the main function.
+    # sys.exit(main()) is a good way to propagate an exit code.
+    sys.exit(main())
+
+---END OF RESPONSE---
+
+###---GNU shuf---### User median 0.058s Sys median 0.011s
+
+[mingww64@lnxsrv03 ~]$  time shuf < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.071s
+user    0m0.058s
+sys     0m0.012s
+[mingww64@lnxsrv03 ~]$  time shuf < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.099s
+user    0m0.086s
+sys     0m0.011s
+[mingww64@lnxsrv03 ~]$  time shuf < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.070s
+user    0m0.058s
+sys     0m0.011s
+
+###---Python<3.11---### User median 0.614s Sys median 0.039s
+
+[mingww64@lnxsrv03 ~]$ export PATH=/usr/bin/:$PATH
+[mingww64@lnxsrv03 ~]$ which python
+/usr/bin/python
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.661s
+user    0m0.614s
+sys     0m0.038s
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.665s
+user    0m0.618s
+sys     0m0.039s
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.648s
+user    0m0.599s
+sys     0m0.043s
+
+###---Python>=3.11---### User median 0.561s Sys median 0.041s
+
+[mingww64@lnxsrv03 ~]$ export PATH=/usr/local/cs/bin/:$PATH
+[mingww64@lnxsrv03 ~]$ which python
+/usr/local/cs/bin/python
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.671s
+user    0m0.588s
+sys     0m0.045s
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.609s
+user    0m0.554s
+sys     0m0.038s
+[mingww64@lnxsrv03 ~]$  time ./shuf.py < /usr/share/unicode/ucd/BidiTest.txt > /dev/null
+
+real    0m0.625s
+user    0m0.561s
+sys     0m0.041s
+[mingww64@lnxsrv03 ~]$ lscpu
+Architecture:            x86_64
+  CPU op-mode(s):        32-bit, 64-bit
+  Address sizes:         44 bits physical, 48 bits virtual
+  Byte Order:            Little Endian
+CPU(s):                  4
+  On-line CPU(s) list:   0-3
+Vendor ID:               GenuineIntel
+  Model name:            Intel(R) Xeon(R) Silver 4116 CPU @ 2.10GHz
+    CPU family:          6
+    Model:               85
+    Thread(s) per core:  1
+    Core(s) per socket:  4
+    Socket(s):           1
+    Stepping:            4
+    BogoMIPS:            4190.15
+    Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse
+                         4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti ssbd ibrs ibpb stibp fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx avx512f avx512dq rdseed adx smap clflushopt avx512cd avx512bw
+                          avx512vl xsaveopt xsavec xsaves flush_l1d
+Virtualization features:
+  Hypervisor vendor:     Microsoft
+  Virtualization type:   full
+Caches (sum of all):
+  L1d:                   128 KiB (4 instances)
+  L1i:                   128 KiB (4 instances)
+  L2:                    4 MiB (4 instances)
+  L3:                    66 MiB (4 instances)
+NUMA:
+  NUMA node(s):          1
+  NUMA node0 CPU(s):     0-3
+Vulnerabilities:
+  Gather data sampling:  Unknown: Dependent on hypervisor status
+  Itlb multihit:         KVM: Mitigation: VMX unsupported
+  L1tf:                  Mitigation; PTE Inversion
+  Mds:                   Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+  Meltdown:              Mitigation; PTI
+  Mmio stale data:       Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+  Retbleed:              Mitigation; IBRS
+  Spec rstack overflow:  Not affected
+  Spec store bypass:     Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:            Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:            Mitigation; IBRS, IBPB conditional, STIBP disabled, RSB filling, PBRSB-eIBRS Not affected
+  Srbds:                 Not affected
+  Tsx async abort:       Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+[mingww64@lnxsrv03 ~]$ cat /etc/os-release
+NAME="Red Hat Enterprise Linux"
+VERSION="9.5 (Plow)"
+ID="rhel"
+ID_LIKE="fedora"
+VERSION_ID="9.5"
+PLATFORM_ID="platform:el9"
+PRETTY_NAME="Red Hat Enterprise Linux 9.5 (Plow)"
+ANSI_COLOR="0;31"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:redhat:enterprise_linux:9::baseos"
+HOME_URL="https://www.redhat.com/"
+DOCUMENTATION_URL="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9"
+BUG_REPORT_URL="https://issues.redhat.com/"
+
+REDHAT_BUGZILLA_PRODUCT="Red Hat Enterprise Linux 9"
+REDHAT_BUGZILLA_PRODUCT_VERSION=9.5
+REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux"
+REDHAT_SUPPORT_PRODUCT_VERSION="9.5"
+[mingww64@lnxsrv03 ~]$
