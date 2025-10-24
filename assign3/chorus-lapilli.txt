@@ -1,0 +1,34 @@
+
+Added Functions:
+Move count (moveCount): number to track placed pieces
+
+countPlayerPieces(NextMoves):
+
+- Counts how many pieces a NextMoves has on board
+
+- Used to determine game phase (rule 1)
+
+isAdjacent(from, to):
+
+- Checks if two squares are adjacent
+
+- Uses predefined adjacency map 
+
+- Returns true if squares are neighbors
+
+mustMoveFromCenter(NextMoves):
+
+- Checks if NextMoves must move from center
+
+- Tests for possible winning moves
+
+- Returns true if center piece must move
+
+calculateWinner(squares):
+
+- Checks for three in a row
+
+- Tests all possible winning combinations
+
+- Returns winning Player or null
+

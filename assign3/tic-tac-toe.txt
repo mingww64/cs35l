@@ -1,0 +1,16 @@
+run ./helper dev
+page showing one squared x
+
+Editing App.js:
+write 3x3 squares with 3 divs warpped in fragment <> </>
+Change function name from Square to Board
+
+Passing data through props, write function Square to generate button with value
+
+To Display X on click, import useState to remember click states, write handleClick function under Square
+
+Create an array with nine elements and set each of them to null under Board(), remove sateful Square
+Pass down a function from the Board component to the Square component, and have Square call that function when a square is clicked
+define the handleClick function inside the Board component to update the squares array holding your board’s state
+Use arrow function () => to pass handlClick() as a prop to prevent infinite loop.
+add a boolean in handleClick and filp it in each call to determine X or O, return early if the square is filled or winner exists.
