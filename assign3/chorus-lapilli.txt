@@ -4,7 +4,7 @@ Move count (moveCount): number to track placed pieces
 
 countPlayerPieces(NextMoves):
 
-- Counts how many pieces a NextMoves has on board
+- Counts how many pieces a player has on board
 
 - Used to determine game phase (rule 1)
 
@@ -16,19 +16,15 @@ isAdjacent(from, to):
 
 - Returns true if squares are neighbors
 
-mustMoveFromCenter(NextMoves):
+mustMoveFromCenter(player):
 
-- Checks if NextMoves must move from center
+- Checks if player must move from center
 
-- Tests for possible winning moves
+- Tests for possible winning moves, return winning move if exists
 
-- Returns true if center piece must move
+- Returns true if center piece must move (no winning move and center occupied by the player)
 
-calculateWinner(squares):
-
-- Checks for three in a row
-
-- Tests all possible winning combinations
-
-- Returns winning Player or null
-
+Revised: HandleClick(squareIndex)
+if winner exists, do nothing
+if player already has 3 pieces on board,
+    if player must move from the center but did not choose the center piece, do nothing

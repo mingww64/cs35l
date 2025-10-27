@@ -37,27 +37,30 @@ export default function Board() {
   }
 
   function mustMoveFromCenter(player) {
-    // If the player has a piece in the center
-    if (squares[4] === player) {
-      const tmpSquares = squares.slice();
-      // Check adjacent squares for empty spots
-      const adjacentToCenter = [0, 1, 2, 3, 5, 6, 7, 8];
-      for (let to of adjacentToCenter) {
-        if (!squares[to]) {
-          // Try moving to this position
-          tmpSquares[4] = null;
-          tmpSquares[to] = player;
-          if (calculateWinner(tmpSquares)) {
-            return false; // Found a winning move, can stay in center
+    // If the player does not have a piece in the center, rule doesn't apply
+    if (squares[4] !== player) {
+      return { mustMove: false };
+    }
+
+    // Check if any piece can make a winning move
+    for (let from = 0; from < 9; from++) {
+      if (squares[from] === player) {
+        const tmpSquares = squares.slice();
+        for (let to = 0; to < 9; to++) {
+          if (!squares[to] && isAdjacent(from, to)) {
+            tmpSquares[from] = null;
+            tmpSquares[to] = player;
+            if (calculateWinner(tmpSquares)) {
+              return { mustMove: false, winningMove: { from, to } };
+            }
+            tmpSquares[from] = player;
+            tmpSquares[to] = null;
           }
-          // Reset for next iteration
-          tmpSquares[4] = player;
-          tmpSquares[to] = null;
         }
       }
-      return true; // Must move from center as no winning move is available
     }
-    return false; // No piece in center
+    // No winning move found with any piece, must move from center
+    return { mustMove: true };
   }
 
   function handleClick(i) {
@@ -65,16 +68,18 @@ export default function Board() {
       return;
     }
 
-    const nextMove = xIsNext ? 'X' : 'O';
-    const pieces = countPlayerPieces(nextMove);
+    const playerSwitch = xIsNext ? 'X' : 'O';
+    const pieces = countPlayerPieces(playerSwitch);
 
     // Moving phase (after placing 3 pieces)
     if (pieces === 3) {
+      const moveStatus = mustMoveFromCenter(playerSwitch);
+
       if (selectedPiece === null) {
         // Selecting a piece to move
-        if (squares[i] === nextMove) {
-          // If player has a piece in center and it's not selected, they must select it
-          if (mustMoveFromCenter(nextMove) && squares[4] === nextMove && i !== 4) {
+        if (squares[i] === playerSwitch) {
+          if (moveStatus.mustMove && i !== 4) {
+            setSelectedPiece(null);
             return;
           }
           setSelectedPiece(i);
@@ -82,45 +87,43 @@ export default function Board() {
       } else {
         // A piece is already selected (at `selectedPiece`). User clicked `i`.
 
-        // Case 1: User clicked on one of their *own* pieces (to change selection)
-        if (squares[i] === nextMove) {
-          // Check the 'mustMoveFromCenter' rule for the *new* piece
-          if (mustMoveFromCenter(nextMove) && squares[4] === nextMove && i !== 4) {
-            // Invalid new selection. Deselect the *original* piece.
-            setSelectedPiece(null);
-            return;
-          }
-          // Otherwise, it's a valid new piece to select.
+        // Case 1: User clicked on one of their *own* pieces to change selection
+        if (squares[i] === playerSwitch) {
           setSelectedPiece(i);
-          return; // Exit.
+          return;
         }
 
-        // Case 2: User clicked on a valid, empty, adjacent square (a valid move)
+        // Case 2: User clicked on a valid, empty, adjacent square
         if (!squares[i] && isAdjacent(selectedPiece, i)) {
-          const nextSquares = squares.slice();
-          
-          // Handle the center piece movement
-          if (selectedPiece === 4 && mustMoveFromCenter(nextMove)) {
-            // Always allow moving from center when it's required
-            nextSquares[selectedPiece] = null;
-            nextSquares[i] = nextMove;
-            setSquares(nextSquares);
-            setSelectedPiece(null);
-            setXIsNext(!xIsNext);
-            return;
-          } else if (selectedPiece !== 4 || !mustMoveFromCenter(nextMove)) {
-            // Handle non-center pieces or when center move isn't required
-            nextSquares[selectedPiece] = null;
-            nextSquares[i] = nextMove;
-            setSquares(nextSquares);
-            setSelectedPiece(null);
-            setXIsNext(!xIsNext);
-            return;
+          // If a winning move exists, only allow that move or moving from center
+          if (moveStatus.winningMove) {
+            if (
+              (selectedPiece === moveStatus.winningMove.from && i === moveStatus.winningMove.to) ||
+              selectedPiece === 4
+            ) {
+              const nextSquares = squares.slice();
+              nextSquares[selectedPiece] = null;
+              nextSquares[i] = playerSwitch;
+              setSquares(nextSquares);
+              setSelectedPiece(null);
+              setXIsNext(!xIsNext);
+              return;
+            } else {
+              setSelectedPiece(null);
+              return;
+            }
           }
+
+          // Otherwise, allow any valid move
+          const nextSquares = squares.slice();
+          nextSquares[selectedPiece] = null;
+          nextSquares[i] = playerSwitch;
+          setSquares(nextSquares);
+          setSelectedPiece(null);
+          setXIsNext(!xIsNext);
+          return;
         }
-        
         // Case 3: Invalid move (clicked opponent, non-adjacent, etc.)
-        // Deselect the piece.
         setSelectedPiece(null);
       }
       return;
@@ -129,7 +132,7 @@ export default function Board() {
     // Placing phase (first 3 pieces)
     if (!squares[i]) {
       const nextSquares = squares.slice();
-      nextSquares[i] = nextMove;
+      nextSquares[i] = playerSwitch;
       setSquares(nextSquares);
       setMoveCount(moveCount + 1);
       setXIsNext(!xIsNext);
