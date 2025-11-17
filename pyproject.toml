@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "app"
+version = "0.1.0"
+description = "User profiles processor"
+requires-python = ">=3.13"
+dependencies = [
+    "datetime==5.5",
+    "pathlib==1.0",
+    "pytz==2025.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.2",
+]
+
+[project.scripts]
+user-profiles = "app.main:main"
+
+[tool.setuptools]
+package-dir = {"app" = "src"}
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+

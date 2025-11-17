@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Alice Marie Johnson",
+        "email": "alice.johnson@email.com",
+        "password": "Password1!",
+        "dob": "03/20/1985",
+        "location": {
+            "city": "Seattle",
+            "state": "WA",
+            "country": "US"
+        }
+    },
+    {
+        "name": "David Lee Brown",
+        "email": "david.brown@company.com",
+        "password": "StrongPwd4$",
+        "dob": "1988-11-28",
+        "location": {
+            "city": "Chicago",
+            "state": "IL",
+            "country": "US"
+        }
+    },
+    {
+        "name": "Emma Wilson",
+        "email": "emma.w@domain.co.uk",
+        "password": "Emma2024%",
+        "dob": "06/30/1992",
+        "location": {
+            "city": "Boston",
+            "state": "MA",
+            "country": "US"
+        }
+    },
+    {
+        "name": "Bob Williams",
+        "email": "bob.williams@test.org",
+        "password": "SecurePass2@",
+        "dob": "1995-07-12",
+        "location": {
+            "city": "NewYork",
+            "state": "NY",
+            "country": "US"
+        }
+    },
+    {
+        "name": "Carol Davis",
+        "email": "carol.d@example.net",
+        "password": "MyPass3!",
+        "dob": "12/05/2000",
+        "location": {
+            "city": "Austin",
+            "state": "TX",
+            "country": "US"
+        }
+    }
+]
+

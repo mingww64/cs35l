@@ -1,0 +1,6 @@
+datetime==5.5
+pathlib==1.0
+pytz==2025.2
+
+[dev]
+pytest>=8.4.2

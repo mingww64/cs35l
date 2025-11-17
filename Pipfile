@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pytest = "*"
+datetime = "==5.5"
+pathlib = "==1"
+app = {file = ".", editable = true}
+
+[dev-packages]
+
+[requires]
+python_version = "3.13"
+
+[scripts]
+test = "pytest"
+zip = "python zip.py"

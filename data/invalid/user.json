@@ -1,0 +1,12 @@
+{
+    "name": "J",
+    "email": "invalid-email",
+    "password": "Secure123!",
+    "dob": "13/32/2020",
+    "location": {
+        "city": "Los Angeles",
+        "state": "California",
+        "country": "us"
+    }
+}
+

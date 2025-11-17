@@ -1,0 +1,2 @@
+[console_scripts]
+user-profiles = app.main:main

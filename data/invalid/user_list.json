@@ -1,0 +1,58 @@
+[
+    {
+        "name": "SingleName",
+        "email": "missing@domain",
+        "password": "Secure123!",
+        "dob": "00/00/0000",
+        "location": {
+            "city": "City123",
+            "state": "CAL",
+            "country": "us"
+        }
+    },
+    {
+        "name": "TooManyParts First Middle Last Extra",
+        "email": "test@@example.com",
+        "password": "Secure123!",
+        "dob": "2020/01/15",
+        "location": {
+            "city": "Test City",
+            "state": "tx",
+            "country": "USA"
+        }
+    },
+    {
+        "name": "john Smith",
+        "email": "valid@email.com",
+        "password": "Secure123!",
+        "dob": "02/29/2023",
+        "location": {
+            "city": "Valid",
+            "state": "NY",
+            "country": "USA"
+        }
+    },
+    {
+        "name": "Valid Name",
+        "email": "no-at-symbol.com",
+        "password": "Secure123!!",
+        "dob": "1990-13-01",
+        "location": {
+            "city": "City",
+            "state": "AB",
+            "country": "USA"
+        }
+    },
+    {
+        "name": "Another Valid",
+        "email": "another@valid.com",
+        "password": "Secure123!!",
+        "dob": "15/31/1995",
+        "location": {
+            "city": "Place",
+            "state": "WA",
+            "country": "U"
+        }
+    }
+]
+

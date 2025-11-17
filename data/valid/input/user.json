@@ -1,0 +1,12 @@
+{
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "password": "Secure123!",
+    "dob": "01/15/1990",
+    "location": {
+        "city": "LosAngeles",
+        "state": "CA",
+        "country": "US"
+    }
+}
+
